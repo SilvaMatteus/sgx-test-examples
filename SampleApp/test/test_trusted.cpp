@@ -30,3 +30,12 @@ TEST(TestTrusted, EcallCallingAnotherFunc)
     ecall_that_calls_another_function(global_eid, &given_number);
     EXPECT_EQ(given_number, expected_number);
 }
+
+TEST(TestTrusted, EnclavePrivateFunction)
+{
+    int initial_value = 0;
+    int expected_value = 1;
+    int given_value = 0;
+    private_increment_inside_enclave(global_eid, &given_value, initial_value);
+    EXPECT_EQ(given_value, expected_value);
+}

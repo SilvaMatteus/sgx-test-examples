@@ -58,6 +58,16 @@ enclave {
     trusted {
         public int trusted_sum(int a, int b);
         public int ecall_that_calls_another_function();
+    /*
+    * Here are the functions/procedures exposed only when the
+    * test suite is running.
+    * There is a #define here because I don't know how to
+    * define this macho using the Makefile yet.
+    */
+#define TEST_ON
+#ifdef TEST_ON
+        public int private_increment_inside_enclave(int value);
+#endif
     };
     untrusted {
         void ocall_print_string([in, string] const char *str);

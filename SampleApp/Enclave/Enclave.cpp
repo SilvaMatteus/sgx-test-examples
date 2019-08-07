@@ -52,6 +52,10 @@ int ecall_that_calls_another_function()
     return get_sample_int();
 }
 
+int private_increment_inside_enclave(int value)
+{
+    return ++value;
+}
 
 /* 
  * printf: 
