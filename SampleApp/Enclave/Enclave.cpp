@@ -35,18 +35,31 @@
 #include <stdio.h> /* vsnprintf */
 #include <string.h>
 
+int sample_int = 69;
+
 int trusted_sum(int a, int b)
 {
     return a + b;
 }
 
+int get_sample_int()
+{
+    return sample_int;
+}
+
+int ecall_that_calls_another_function()
+{
+    return get_sample_int();
+}
+
+
 /* 
  * printf: 
  *   Invokes OCALL to display the enclave buffer to the terminal.
  */
-int printf(const char* fmt, ...)
+int printf(const char *fmt, ...)
 {
-    char buf[BUFSIZ] = { '\0' };
+    char buf[BUFSIZ] = {'\0'};
     va_list ap;
     va_start(ap, fmt);
     vsnprintf(buf, BUFSIZ, fmt, ap);
