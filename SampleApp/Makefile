@@ -237,6 +237,10 @@ endif
 ######## App Objects ########
 
 App/Enclave_u.h: $(SGX_EDGER8R) Enclave/Enclave.edl
+	@sed -i '/^\#define TEST_ON$$/d' Enclave/Enclave.edl
+ifneq ($(RUN_TESTS), 0)
+	@grep -v "\#define TEST_ON" Enclave/Enclave.edl && sed -i '/^\#ifdef TEST_ON.*/i \#define TEST_ON' Enclave/Enclave.edl
+endif
 	@cd App && $(SGX_EDGER8R) --untrusted ../Enclave/Enclave.edl --search-path ../Enclave --search-path $(SGX_SDK)/include
 	@echo "GEN  =>  $@"
 
@@ -287,3 +291,4 @@ $(Signed_Enclave_Name): $(Enclave_Name)
 clean:
 	@rm -f .config_* $(App_Name) $(Enclave_Name) $(Signed_Enclave_Name) $(App_Cpp_Objects) App/Enclave_u.* $(Enclave_Cpp_Objects) Enclave/Enclave_t.*
 	@find test -type f -name '*.o' -delete
+	@sed -i '/^\#define TEST_ON$$/d' Enclave/Enclave.edl

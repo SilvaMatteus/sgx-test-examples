@@ -64,7 +64,6 @@ enclave {
     * There is a #define here because I don't know how to
     * define this macho using the Makefile yet.
     */
-#define TEST_ON
 #ifdef TEST_ON
         public int private_increment_inside_enclave(int value);
 #endif
